@@ -39,7 +39,7 @@ alfa = sm.var('alfa')
 M = int(input("Введите размерность: "))
 print('\n')
 
-wxna = sm.zeros(M, 1)
+wxna = sm.zeros(M, 1)   # Эти записи и дальнейшие создают матрицу нулей размера M,1
 txna = sm.zeros(M, 1)
 Mxna = sm.zeros(M, 1)
 Vxna = sm.zeros(M, 1)
@@ -89,8 +89,9 @@ tyme = sm.zeros(M, 1)
 Myme = sm.zeros(M, 1)
 Vyme = sm.zeros(M, 1)
 
-for i in range(M):
-    wxna[i] = sm.var('wxna' + str(i))
+for i in range(M):  # Эти циклы и дальнейшие создают в этих пустых матрицах наборы переменных, по M на каждое значение
+
+    wxna[i] = sm.var('wxna' + str(i))   # Вид: wxna0, wxna1...
     txna[i] = sm.var('txna' + str(i))
     Mxna[i] = sm.var('Mxna' + str(i))
     Vxna[i] = sm.var('Vxna' + str(i))
@@ -164,6 +165,7 @@ wyd = sm.zeros(M, 1)
 wye = sm.zeros(M, 1)
 
 for i in range(M):
+
     wxa[i] = sm.var('wxa' + str(i))
     wxb[i] = sm.var('wxb' + str(i))
     wxc[i] = sm.var('wxc' + str(i))
@@ -196,7 +198,7 @@ sumwpare = 0
 
 print('Считаем w...')
 
-for n in range(0, M):
+for n in range(0, M):   # Суммы по x
     wxa[n] = (X1 * wxna[n] + X2 * txna[n] + X3 * Mxna[n] + X4 * Vxna[n]) * sm.sin(beta * y)
     wxa[n] = wxa[n].subs(beta, (((n + 1) * sm.pi.evalf(k)) / b1))
     sumwxa += wxa[n]
@@ -217,7 +219,7 @@ for n in range(0, M):
     wxe[n] = wxe[n].subs(beta, (((n + 1) * sm.pi.evalf(k)) / b5))
     sumwxe += wxe[n]
 
-for m in range(0, M):
+for m in range(0, M):   # Суммы по y
     wya[m] = (Y1 * wyma[m] + Y2 * tyma[m] + Y3 * Myma[m] + Y4 * Vyma[m]) * sm.sin(alfa * x)
     wya[m] = wya[m].subs(alfa, (((m + 1) * sm.pi.evalf(k)) / a1))
     sumwya += wya[m]
@@ -238,7 +240,7 @@ for m in range(0, M):
     wye[m] = wye[m].subs(alfa, (((m + 1) * sm.pi.evalf(k)) / a5))
     sumwye += wye[m]
 
-for n in range(1, M + 1):
+for n in range(1, M + 1):   # Частные значения
     for m in range(1, M + 1):
         wpara = (4 * ((-1) ** (m + n) - (-1) ** m - (-1) ** n + 1) * sm.sin(m * x * sm.pi.evalf(k) / a1) * sm.sin(
             n * y * sm.pi.evalf(k) / b1)) / (
@@ -1009,6 +1011,7 @@ yci = sm.zeros(M + 2, 1)
 ydi = sm.zeros(M + 2, 1)
 yei = sm.zeros(M + 2, 1)
 
+# Вывод значений прогиба на серединах пластин
 print(wwa.subs([(x, a1 / 2), (y, b1 / 2)]))
 print(wwb.subs([(x, a2 / 2), (y, b2 / 2)]))
 print(wwc.subs([(x, a3 / 2), (y, b3 / 2)]))
@@ -1017,6 +1020,7 @@ print(wwe.subs([(x, a5 / 2), (y, b5 / 2)]))
 
 print('Вывод графиков...')
 
+# Вывод прогиба
 for i in range(M + 2):
     xai[i] = (a1 / (M + 1)) * i
     xbi[i] = (a2 / (M + 1)) * i
@@ -1037,6 +1041,7 @@ for i in range(M + 2):
     wwwe[i] = wwe.subs([(x, xei[i]), (y, yei[i])])
 
 """
+# Вывод момента
 for i in range(M + 2):
 
     xai[i] = 0
@@ -1056,6 +1061,7 @@ for i in range(M + 2):
     MMMxe[i] = MMxe.subs([(x, xei[i]), (y, yei[i])])
 """
 """
+# Вывод перерезывающей силы
 for i in range(M + 2):
     xai[i] = 0
     yai[i] = (b1 / (M + 1)) * i
@@ -1076,16 +1082,17 @@ for i in range(M + 2):
 
 print('Готово\n')
 
+# Смещение графиков для совместного вывода
+for i in range(M+2):
+    xbi[i] += a1
+    xdi[i] += a1 + a2
 
-plt.subplot(231)
+# График 1 + 2 + 4, 3, 5
+plt.subplot(211)
 plt.plot(xai, wwwa)
-plt.title("1")
-plt.subplot(232)
 plt.plot(xbi, wwwb)
-plt.title("2")
-plt.subplot(233)
 plt.plot(xdi, wwwd)
-plt.title("4")
+plt.title("1 + 2 + 4")
 plt.subplot(234)
 plt.plot(xci, wwwc)
 plt.title("3")
@@ -1093,18 +1100,5 @@ plt.subplot(236)
 plt.plot(xei, wwwe)
 plt.title("5")
 
-"""
-plt.subplot(221)
-plt.plot(yai, MMMxa)
-plt.title("1")
-plt.subplot(222)
-plt.plot(ydi, MMMxd)
-plt.title("4")
-plt.subplot(223)
-plt.plot(yci, MMMxc)
-plt.title("3")
-plt.subplot(224)
-plt.plot(ydi, MMMxe)
-plt.title("5")
-"""
+
 plt.show()
