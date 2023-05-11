@@ -1018,8 +1018,9 @@ print(wwc.subs([(x, a3 / 2), (y, b3 / 2)]))
 print(wwd.subs([(x, a4 / 2), (y, b4 / 2)]))
 print(wwe.subs([(x, a5 / 2), (y, b5 / 2)]))
 
-print('Вывод графиков...')
+print('Вывод графиков')
 
+"""
 # Вывод прогиба
 for i in range(M + 2):
     xai[i] = (a1 / (M + 1)) * i
@@ -1039,6 +1040,27 @@ for i in range(M + 2):
     wwwc[i] = wwc.subs([(x, xci[i]), (y, yci[i])])
     wwwd[i] = wwd.subs([(x, xdi[i]), (y, ydi[i])])
     wwwe[i] = wwe.subs([(x, xei[i]), (y, yei[i])])
+    
+
+# Смещение графиков для совместного вывода 1 + 2 + 4
+for i in range(M+2):
+    xbi[i] += a1
+    xdi[i] += a1 + a2
+
+# График 1 + 2 + 4, 3, 5
+plt.subplot(211)
+plt.plot(xai, wwwa)
+plt.plot(xbi, wwwb)
+plt.plot(xdi, wwwd)
+plt.title("1 + 2 + 4")
+plt.subplot(234)
+plt.plot(xci, wwwc)
+plt.title("3")
+plt.subplot(236)
+plt.plot(xei, wwwe)
+plt.title("5")
+plt.show()
+"""
 
 """
 # Вывод момента
@@ -1060,7 +1082,7 @@ for i in range(M + 2):
     MMMxd[i] = MMxd.subs([(x, xdi[i]), (y, ydi[i])])
     MMMxe[i] = MMxe.subs([(x, xei[i]), (y, yei[i])])
 """
-"""
+
 # Вывод перерезывающей силы
 for i in range(M + 2):
     xai[i] = 0
@@ -1078,27 +1100,19 @@ for i in range(M + 2):
 
     VVVxd[i] = VVxd.subs([(x, xdi[i]), (y, ydi[i])])
     VVVxe[i] = VVxe.subs([(x, xei[i]), (y, yei[i])])
-"""
 
-print('Готово\n')
-
-# Смещение графиков для совместного вывода
+# Смещение графиков для совместного вывода 1 + 3 и 4 + 5
 for i in range(M+2):
-    xbi[i] += a1
-    xdi[i] += a1 + a2
+    yci[i] += b1
+    yei[i] += b4
 
-# График 1 + 2 + 4, 3, 5
-plt.subplot(211)
-plt.plot(xai, wwwa)
-plt.plot(xbi, wwwb)
-plt.plot(xdi, wwwd)
-plt.title("1 + 2 + 4")
-plt.subplot(234)
-plt.plot(xci, wwwc)
-plt.title("3")
-plt.subplot(236)
-plt.plot(xei, wwwe)
-plt.title("5")
-
-
+# График 1 + 3, 4 + 5
+plt.subplot(121)
+plt.plot(yai, VVVxa)
+plt.plot(yci, VVVxc)
+plt.title("1 + 3")
+plt.subplot(122)
+plt.plot(ydi, VVVxd)
+plt.plot(yei, VVVxe)
+plt.title("4 + 5")
 plt.show()
