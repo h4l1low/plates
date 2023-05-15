@@ -1019,6 +1019,7 @@ print(wwe.subs([(x, a5 / 2), (y, b5 / 2)]))
 
 print('Вывод графиков')
 
+
 # Вывод прогиба
 for i in range(M + 2):
     xai[i] = (a1 / (M + 1)) * i
