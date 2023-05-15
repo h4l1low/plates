@@ -1,6 +1,5 @@
 import numpy as np
 import sympy as sm
-import scipy as sc
 import matplotlib.pyplot as plt
 
 # Мантисса
@@ -1020,7 +1019,6 @@ print(wwe.subs([(x, a5 / 2), (y, b5 / 2)]))
 
 print('Вывод графиков')
 
-
 # Вывод прогиба
 for i in range(M + 2):
     xai[i] = (a1 / (M + 1)) * i
@@ -1097,29 +1095,39 @@ for i in range(M+2):
 
 # График 1 + 2 + 4, 3, 5
 plt.subplot(211)
-plt.plot(xai, wwwa[:, 0], '-b', label='y = 0')
-plt.plot(xbi, wwwb[:, 0], '-b')
-plt.plot(xdi, wwwd[:, 0], '-b')
+plt.plot(xai, wwwa[:, 0], '-k', label='y = 0')
+plt.plot(xbi, wwwb[:, 0], '-k')
+plt.plot(xdi, wwwd[:, 0], '-k')
 plt.plot(xai, wwwa[:, 1], '--k', label='y = b/4')
 plt.plot(xbi, wwwb[:, 1], '--k')
 plt.plot(xdi, wwwd[:, 1], '--k')
-plt.plot(xai, wwwa[:, 2], ':r', label='y = b/2')
-plt.plot(xbi, wwwb[:, 2], ':r')
-plt.plot(xdi, wwwd[:, 2], ':r')
-plt.plot(xai, wwwa[:, 3], '-.y', label='y = 3b/4')
-plt.plot(xbi, wwwb[:, 3], '-.y')
-plt.plot(xdi, wwwd[:, 3], '-.y')
-plt.plot(xai, wwwa[:, 4], '-g', label='y = b')
-plt.plot(xbi, wwwb[:, 4], '-g')
-plt.plot(xdi, wwwd[:, 4], '-g')
+plt.plot(xai, wwwa[:, 2], ':k', label='y = b/2')
+plt.plot(xbi, wwwb[:, 2], ':k')
+plt.plot(xdi, wwwd[:, 2], ':k')
+plt.plot(xai, wwwa[:, 3], '-.k', label='y = 3b/4')
+plt.plot(xbi, wwwb[:, 3], '-.k')
+plt.plot(xdi, wwwd[:, 3], '-.k')
+plt.plot(xai, wwwa[:, 4], '-k', label='y = b')
+plt.plot(xbi, wwwb[:, 4], '-k')
+plt.plot(xdi, wwwd[:, 4], '-k')
 plt.title("1 + 2 + 4")
 plt.legend()
 plt.subplot(234)
-plt.plot(xci, wwwc)
+plt.plot(xci, wwwc[:, 0], '-k', label='y = 0')
+plt.plot(xci, wwwc[:, 1], '--k', label='y = b/4')
+plt.plot(xci, wwwc[:, 2], ':k', label='y = b/2')
+plt.plot(xci, wwwc[:, 3], '-.k', label='y = 3b/4')
+plt.plot(xci, wwwc[:, 4], '-k', label='y = b')
 plt.title("3")
+plt.legend()
 plt.subplot(236)
-plt.plot(xei, wwwe)
+plt.plot(xci, wwwe[:, 0], '-k', label='y = 0')
+plt.plot(xci, wwwe[:, 1], '--k', label='y = b/4')
+plt.plot(xci, wwwe[:, 2], ':k', label='y = b/2')
+plt.plot(xci, wwwe[:, 3], '-.k', label='y = 3b/4')
+plt.plot(xci, wwwe[:, 4], '-k', label='y = b')
 plt.title("5")
+plt.legend()
 plt.show()
 
 
