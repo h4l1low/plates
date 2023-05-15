@@ -3,7 +3,7 @@ import sympy as sm
 import matplotlib.pyplot as plt
 
 # Мантисса
-k = 100
+k = 300
 
 # модуль Юнга (упругости) и коэффициент Пуассона для стали
 E = sm.N(2 * 10 ** 11, k)
@@ -38,7 +38,7 @@ alfa = sm.var('alfa')
 M = int(input("Введите размерность: "))
 print('\n')
 
-wxna = sm.zeros(M, 1)   # Эти записи и дальнейшие создают матрицу нулей размера M,1
+wxna = sm.zeros(M, 1)  # Эти записи и дальнейшие создают матрицу нулей размера M,1
 txna = sm.zeros(M, 1)
 Mxna = sm.zeros(M, 1)
 Vxna = sm.zeros(M, 1)
@@ -90,7 +90,7 @@ Vyme = sm.zeros(M, 1)
 
 for i in range(M):  # Эти циклы и дальнейшие создают в этих пустых матрицах наборы переменных, по M на каждое значение
 
-    wxna[i] = sm.var('wxna' + str(i))   # Вид: wxna0, wxna1...
+    wxna[i] = sm.var('wxna' + str(i))  # Вид: wxna0, wxna1...
     txna[i] = sm.var('txna' + str(i))
     Mxna[i] = sm.var('Mxna' + str(i))
     Vxna[i] = sm.var('Vxna' + str(i))
@@ -139,13 +139,13 @@ print('Считаем X,Y...')
 
 X1 = sm.cosh(beta * x) + 1 / 2 * (sm.sinh(beta * x) * x * beta * v) - 1 / 2 * (sm.sinh(beta * x) * x * beta)
 X2 = -(beta * sm.cosh(beta * x) * x * v - beta * sm.cosh(beta * x) * x - sm.sinh(beta * x) * v - sm.sinh(beta * x)) / (
-            2 * beta)
+        2 * beta)
 X3 = -(sm.sinh(beta * x) * x) / (2 * D * beta)
 X4 = -(beta * sm.cosh(beta * x) * x - sm.sinh(beta * x)) / (2 * D * beta ** 3)
 
 Y1 = sm.cosh(alfa * y) + 1 / 2 * sm.sinh(alfa * y) * y * alfa * v - 1 / 2 * sm.sinh(alfa * y) * y * alfa
 Y2 = -(alfa * sm.cosh(alfa * y) * y * v - alfa * sm.cosh(alfa * y) * y - sm.sinh(alfa * y) * v - sm.sinh(alfa * y)) / (
-            2 * alfa)
+        2 * alfa)
 Y3 = -(sm.sinh(alfa * y) * y) / (2 * D * alfa)
 Y4 = -(alfa * sm.cosh(alfa * y) * y - sm.sinh(alfa * y)) / (2 * D * alfa ** 3)
 
@@ -164,7 +164,6 @@ wyd = sm.zeros(M, 1)
 wye = sm.zeros(M, 1)
 
 for i in range(M):
-
     wxa[i] = sm.var('wxa' + str(i))
     wxb[i] = sm.var('wxb' + str(i))
     wxc[i] = sm.var('wxc' + str(i))
@@ -197,7 +196,7 @@ sumwpare = 0
 
 print('Считаем w...')
 
-for n in range(0, M):   # Суммы по x
+for n in range(0, M):  # Суммы по x
     wxa[n] = (X1 * wxna[n] + X2 * txna[n] + X3 * Mxna[n] + X4 * Vxna[n]) * sm.sin(beta * y)
     wxa[n] = wxa[n].subs(beta, (((n + 1) * sm.pi.evalf(k)) / b1))
     sumwxa += wxa[n]
@@ -218,7 +217,7 @@ for n in range(0, M):   # Суммы по x
     wxe[n] = wxe[n].subs(beta, (((n + 1) * sm.pi.evalf(k)) / b5))
     sumwxe += wxe[n]
 
-for m in range(0, M):   # Суммы по y
+for m in range(0, M):  # Суммы по y
     wya[m] = (Y1 * wyma[m] + Y2 * tyma[m] + Y3 * Myma[m] + Y4 * Vyma[m]) * sm.sin(alfa * x)
     wya[m] = wya[m].subs(alfa, (((m + 1) * sm.pi.evalf(k)) / a1))
     sumwya += wya[m]
@@ -239,16 +238,16 @@ for m in range(0, M):   # Суммы по y
     wye[m] = wye[m].subs(alfa, (((m + 1) * sm.pi.evalf(k)) / a5))
     sumwye += wye[m]
 
-for n in range(1, M + 1):   # Частные значения
+for n in range(1, M + 1):  # Частные значения
     for m in range(1, M + 1):
         wpara = (4 * ((-1) ** (m + n) - (-1) ** m - (-1) ** n + 1) * sm.sin(m * x * sm.pi.evalf(k) / a1) * sm.sin(
             n * y * sm.pi.evalf(k) / b1)) / (
-                            sm.pi.evalf(k) ** 6 * m * n * D * ((m ** 2) / (a1 ** 2) + (n ** 2) / (b1 ** 2)) ** 2)
+                        sm.pi.evalf(k) ** 6 * m * n * D * ((m ** 2) / (a1 ** 2) + (n ** 2) / (b1 ** 2)) ** 2)
         sumwpara += wpara
 
         wparb = (4 * ((-1) ** (m + n) - (-1) ** m - (-1) ** n + 1) * sm.sin(m * x * sm.pi.evalf(k) / a2) * sm.sin(
             n * y * sm.pi.evalf(k) / b2)) / (
-                            sm.pi.evalf(k) ** 6 * m * n * D * ((m ** 2) / (a2 ** 2) + (n ** 2) / (b2 ** 2)) ** 2)
+                        sm.pi.evalf(k) ** 6 * m * n * D * ((m ** 2) / (a2 ** 2) + (n ** 2) / (b2 ** 2)) ** 2)
         sumwparb += wparb
 
         wparc = (4 * ((-1) ** (m + n) - (-1) ** m - (-1) ** n + 1) * sm.sin(m * x * sm.pi.evalf(k) / a3) * sm.sin(
@@ -989,21 +988,21 @@ wwwb = sm.zeros(M + 2, 5)
 wwwc = sm.zeros(M + 2, 5)
 wwwd = sm.zeros(M + 2, 5)
 wwwe = sm.zeros(M + 2, 5)
-MMMxa = sm.zeros(M + 2, 1)
-MMMxb = sm.zeros(M + 2, 1)
-MMMxc = sm.zeros(M + 2, 1)
-MMMxd = sm.zeros(M + 2, 1)
-MMMxe = sm.zeros(M + 2, 1)
-VVVxa = sm.zeros(M + 2, 1)
-VVVxb = sm.zeros(M + 2, 1)
-VVVxc = sm.zeros(M + 2, 1)
-VVVxd = sm.zeros(M + 2, 1)
-VVVxe = sm.zeros(M + 2, 1)
-xai = sm.zeros(M + 2, 1)
-xbi = sm.zeros(M + 2, 1)
-xci = sm.zeros(M + 2, 1)
-xdi = sm.zeros(M + 2, 1)
-xei = sm.zeros(M + 2, 1)
+MMMxa = sm.zeros(M + 2, 5)
+MMMxb = sm.zeros(M + 2, 5)
+MMMxc = sm.zeros(M + 2, 5)
+MMMxd = sm.zeros(M + 2, 5)
+MMMxe = sm.zeros(M + 2, 5)
+VVVxa = sm.zeros(M + 2, 5)
+VVVxb = sm.zeros(M + 2, 5)
+VVVxc = sm.zeros(M + 2, 5)
+VVVxd = sm.zeros(M + 2, 5)
+VVVxe = sm.zeros(M + 2, 5)
+xai = sm.zeros(M + 2, 5)
+xbi = sm.zeros(M + 2, 5)
+xci = sm.zeros(M + 2, 5)
+xdi = sm.zeros(M + 2, 5)
+xei = sm.zeros(M + 2, 5)
 yai = sm.zeros(M + 2, 5)
 ybi = sm.zeros(M + 2, 5)
 yci = sm.zeros(M + 2, 5)
@@ -1019,14 +1018,13 @@ print(wwe.subs([(x, a5 / 2), (y, b5 / 2)]))
 
 print('Вывод графиков')
 
-
 # Вывод прогиба
 for i in range(M + 2):
-    xai[i] = (a1 / (M + 1)) * i
-    xbi[i] = (a2 / (M + 1)) * i
-    xci[i] = (a3 / (M + 1)) * i
-    xdi[i] = (a4 / (M + 1)) * i
-    xei[i] = (a5 / (M + 1)) * i
+    xai[i, 0] = (a1 / (M + 1)) * i
+    xbi[i, 0] = (a2 / (M + 1)) * i
+    xci[i, 0] = (a3 / (M + 1)) * i
+    xdi[i, 0] = (a4 / (M + 1)) * i
+    xei[i, 0] = (a5 / (M + 1)) * i
 
     yai[i, 0] = 0
     ybi[i, 0] = 0
@@ -1058,150 +1056,302 @@ for i in range(M + 2):
     ydi[i, 4] = b4
     yei[i, 4] = b5
 
-    wwwa[i, 0] = wwa.subs([(x, xai[i]), (y, yai[i, 0])])
-    wwwb[i, 0] = wwb.subs([(x, xbi[i]), (y, ybi[i, 0])])
-    wwwc[i, 0] = wwc.subs([(x, xci[i]), (y, yci[i, 0])])
-    wwwd[i, 0] = wwd.subs([(x, xdi[i]), (y, ydi[i, 0])])
-    wwwe[i, 0] = wwe.subs([(x, xei[i]), (y, yei[i, 0])])
+    wwwa[i, 0] = wwa.subs([(x, xai[i, 0]), (y, yai[i, 0])])
+    wwwb[i, 0] = wwb.subs([(x, xbi[i, 0]), (y, ybi[i, 0])])
+    wwwc[i, 0] = wwc.subs([(x, xci[i, 0]), (y, yci[i, 0])])
+    wwwd[i, 0] = wwd.subs([(x, xdi[i, 0]), (y, ydi[i, 0])])
+    wwwe[i, 0] = wwe.subs([(x, xei[i, 0]), (y, yei[i, 0])])
 
-    wwwa[i, 1] = wwa.subs([(x, xai[i]), (y, yai[i, 1])])
-    wwwb[i, 1] = wwb.subs([(x, xbi[i]), (y, ybi[i, 1])])
-    wwwc[i, 1] = wwc.subs([(x, xci[i]), (y, yci[i, 1])])
-    wwwd[i, 1] = wwd.subs([(x, xdi[i]), (y, ydi[i, 1])])
-    wwwe[i, 1] = wwe.subs([(x, xei[i]), (y, yei[i, 1])])
+    wwwa[i, 1] = wwa.subs([(x, xai[i, 0]), (y, yai[i, 1])])
+    wwwb[i, 1] = wwb.subs([(x, xbi[i, 0]), (y, ybi[i, 1])])
+    wwwc[i, 1] = wwc.subs([(x, xci[i, 0]), (y, yci[i, 1])])
+    wwwd[i, 1] = wwd.subs([(x, xdi[i, 0]), (y, ydi[i, 1])])
+    wwwe[i, 1] = wwe.subs([(x, xei[i, 0]), (y, yei[i, 1])])
 
-    wwwa[i, 2] = wwa.subs([(x, xai[i]), (y, yai[i, 2])])
-    wwwb[i, 2] = wwb.subs([(x, xbi[i]), (y, ybi[i, 2])])
-    wwwc[i, 2] = wwc.subs([(x, xci[i]), (y, yci[i, 2])])
-    wwwd[i, 2] = wwd.subs([(x, xdi[i]), (y, ydi[i, 2])])
-    wwwe[i, 2] = wwe.subs([(x, xei[i]), (y, yei[i, 2])])
+    wwwa[i, 2] = wwa.subs([(x, xai[i, 0]), (y, yai[i, 2])])
+    wwwb[i, 2] = wwb.subs([(x, xbi[i, 0]), (y, ybi[i, 2])])
+    wwwc[i, 2] = wwc.subs([(x, xci[i, 0]), (y, yci[i, 2])])
+    wwwd[i, 2] = wwd.subs([(x, xdi[i, 0]), (y, ydi[i, 2])])
+    wwwe[i, 2] = wwe.subs([(x, xei[i, 0]), (y, yei[i, 2])])
 
-    wwwa[i, 3] = wwa.subs([(x, xai[i]), (y, yai[i, 3])])
-    wwwb[i, 3] = wwb.subs([(x, xbi[i]), (y, ybi[i, 3])])
-    wwwc[i, 3] = wwc.subs([(x, xci[i]), (y, yci[i, 3])])
-    wwwd[i, 3] = wwd.subs([(x, xdi[i]), (y, ydi[i, 3])])
-    wwwe[i, 3] = wwe.subs([(x, xei[i]), (y, yei[i, 3])])
+    wwwa[i, 3] = wwa.subs([(x, xai[i, 0]), (y, yai[i, 3])])
+    wwwb[i, 3] = wwb.subs([(x, xbi[i, 0]), (y, ybi[i, 3])])
+    wwwc[i, 3] = wwc.subs([(x, xci[i, 0]), (y, yci[i, 3])])
+    wwwd[i, 3] = wwd.subs([(x, xdi[i, 0]), (y, ydi[i, 3])])
+    wwwe[i, 3] = wwe.subs([(x, xei[i, 0]), (y, yei[i, 3])])
 
-    wwwa[i, 4] = wwa.subs([(x, xai[i]), (y, yai[i, 4])])
-    wwwb[i, 4] = wwb.subs([(x, xbi[i]), (y, ybi[i, 4])])
-    wwwc[i, 4] = wwc.subs([(x, xci[i]), (y, yci[i, 4])])
-    wwwd[i, 4] = wwd.subs([(x, xdi[i]), (y, ydi[i, 4])])
-    wwwe[i, 4] = wwe.subs([(x, xei[i]), (y, yei[i, 4])])
-    
+    wwwa[i, 4] = wwa.subs([(x, xai[i, 0]), (y, yai[i, 4])])
+    wwwb[i, 4] = wwb.subs([(x, xbi[i, 0]), (y, ybi[i, 4])])
+    wwwc[i, 4] = wwc.subs([(x, xci[i, 0]), (y, yci[i, 4])])
+    wwwd[i, 4] = wwd.subs([(x, xdi[i, 0]), (y, ydi[i, 4])])
+    wwwe[i, 4] = wwe.subs([(x, xei[i, 0]), (y, yei[i, 4])])
 
 # Смещение графиков для совместного вывода 1 + 2 + 4
-for i in range(M+2):
-    xbi[i] += a1
-    xdi[i] += a1 + a2
+for i in range(M + 2):
+    xbi[i, 0] += a1
+    xdi[i, 0] += a1 + a2
 
 # График 1 + 2 + 4, 3, 5
 plt.subplot(211)
-plt.plot(xai, wwwa[:, 0], '-k', label='y = 0')
-plt.plot(xbi, wwwb[:, 0], '-k')
-plt.plot(xdi, wwwd[:, 0], '-k')
-plt.plot(xai, wwwa[:, 1], '--k', label='y = b/4')
-plt.plot(xbi, wwwb[:, 1], '--k')
-plt.plot(xdi, wwwd[:, 1], '--k')
-plt.plot(xai, wwwa[:, 2], ':k', label='y = b/2')
-plt.plot(xbi, wwwb[:, 2], ':k')
-plt.plot(xdi, wwwd[:, 2], ':k')
-plt.plot(xai, wwwa[:, 3], '-.k', label='y = 3b/4')
-plt.plot(xbi, wwwb[:, 3], '-.k')
-plt.plot(xdi, wwwd[:, 3], '-.k')
-plt.plot(xai, wwwa[:, 4], '-k', label='y = b')
-plt.plot(xbi, wwwb[:, 4], '-k')
-plt.plot(xdi, wwwd[:, 4], '-k')
+plt.plot(xai[:, 0], wwwa[:, 0], ':k', label='y = 0')
+plt.plot(xbi[:, 0], wwwb[:, 0], ':k')
+plt.plot(xdi[:, 0], wwwd[:, 0], ':k')
+plt.plot(xai[:, 0], wwwa[:, 1], '--k', label='y = b/4')
+plt.plot(xbi[:, 0], wwwb[:, 1], '--k')
+plt.plot(xdi[:, 0], wwwd[:, 1], '--k')
+plt.plot(xai[:, 0], wwwa[:, 2], '-b', label='y = b/2')
+plt.plot(xbi[:, 0], wwwb[:, 2], '-b')
+plt.plot(xdi[:, 0], wwwd[:, 2], '-b')
+plt.plot(xai[:, 0], wwwa[:, 3], '-.k', label='y = 3b/4')
+plt.plot(xbi[:, 0], wwwb[:, 3], '-.k')
+plt.plot(xdi[:, 0], wwwd[:, 3], '-.k')
+plt.plot(xai[:, 0], wwwa[:, 4], ':k', label='y = b')
+plt.plot(xbi[:, 0], wwwb[:, 4], ':k')
+plt.plot(xdi[:, 0], wwwd[:, 4], ':k')
+plt.minorticks_on()
+plt.grid(which='major')
+plt.grid(which='minor', linestyle=':')
 plt.title("1 + 2 + 4")
 plt.legend()
+plt.tight_layout()
 plt.subplot(234)
-plt.plot(xci, wwwc[:, 0], '-k', label='y = 0')
-plt.plot(xci, wwwc[:, 1], '--k', label='y = b/4')
-plt.plot(xci, wwwc[:, 2], ':k', label='y = b/2')
-plt.plot(xci, wwwc[:, 3], '-.k', label='y = 3b/4')
-plt.plot(xci, wwwc[:, 4], '-k', label='y = b')
+plt.plot(xci[:, 0], wwwc[:, 0], ':k', label='y = 0')
+plt.plot(xci[:, 0], wwwc[:, 1], '--k', label='y = b/4')
+plt.plot(xci[:, 0], wwwc[:, 2], '-b', label='y = b/2')
+plt.plot(xci[:, 0], wwwc[:, 3], '-.k', label='y = 3b/4')
+plt.plot(xci[:, 0], wwwc[:, 4], ':k', label='y = b')
+plt.minorticks_on()
+plt.grid(which='major')
+plt.grid(which='minor', linestyle=':')
 plt.title("3")
 plt.legend()
+plt.tight_layout()
 plt.subplot(236)
-plt.plot(xci, wwwe[:, 0], '-k', label='y = 0')
-plt.plot(xci, wwwe[:, 1], '--k', label='y = b/4')
-plt.plot(xci, wwwe[:, 2], ':k', label='y = b/2')
-plt.plot(xci, wwwe[:, 3], '-.k', label='y = 3b/4')
-plt.plot(xci, wwwe[:, 4], '-k', label='y = b')
+plt.plot(xci[:, 0], wwwe[:, 0], ':k', label='y = 0')
+plt.plot(xci[:, 0], wwwe[:, 1], '--k', label='y = b/4')
+plt.plot(xci[:, 0], wwwe[:, 2], '-b', label='y = b/2')
+plt.plot(xci[:, 0], wwwe[:, 3], '-.k', label='y = 3b/4')
+plt.plot(xci[:, 0], wwwe[:, 4], ':k', label='y = b')
+plt.minorticks_on()
+plt.grid(which='major')
+plt.grid(which='minor', linestyle=':')
 plt.title("5")
 plt.legend()
+plt.tight_layout()
 plt.show()
 
-
-"""
 # Вывод момента
 for i in range(M + 2):
-
     xai[i, 0] = 0
-    yai[i, 0] = (b1 / (M + 1)) * i
     xci[i, 0] = 0
+    yai[i, 0] = (b1 / (M + 1)) * i
     yci[i, 0] = (b3 / (M + 1)) * i
 
     xdi[i, 0] = a4
-    ydi[i, 0] = (b4 / (M + 1)) * i
     xei[i, 0] = a5
+    ydi[i, 0] = (b4 / (M + 1)) * i
     yei[i, 0] = (b5 / (M + 1)) * i
 
-    MMMxa[i] = MMxa.subs([(x, xai[i, 0]), (y, yai[i, 0])])
-    MMMxc[i] = MMxc.subs([(x, xci[i, 0]), (y, yci[i, 0])])
+    xai[i, 1] = a1 / 4
+    xci[i, 1] = a3 / 4
 
-    MMMxd[i] = MMxd.subs([(x, xdi[i, 0]), (y, ydi[i, 0])])
-    MMMxe[i] = MMxe.subs([(x, xei[i, 0]), (y, yei[i, 0])])
+    xai[i, 2] = a1 / 2
+    xci[i, 2] = a3 / 2
+
+    xai[i, 3] = 3 * a1 / 4
+    xci[i, 3] = 3 * a3 / 4
+
+    xai[i, 4] = a1
+    xci[i, 4] = a3
+
+    xdi[i, 1] = 3 * a4 / 4
+    xei[i, 1] = 3 * a5 / 4
+
+    xdi[i, 2] = a4 / 2
+    xei[i, 2] = a5 / 2
+
+    xdi[i, 3] = a4 / 4
+    xei[i, 3] = a5 / 4
+
+    xdi[i, 4] = 0
+    xei[i, 4] = 0
+
+    MMMxa[i, 0] = MMxa.subs([(x, xai[i, 0]), (y, yai[i, 0])])
+    MMMxc[i, 0] = MMxc.subs([(x, xci[i, 0]), (y, yci[i, 0])])
+
+    MMMxa[i, 1] = MMxa.subs([(x, xai[i, 1]), (y, yai[i, 0])])
+    MMMxc[i, 1] = MMxc.subs([(x, xci[i, 1]), (y, yci[i, 0])])
+
+    MMMxa[i, 2] = MMxa.subs([(x, xai[i, 2]), (y, yai[i, 0])])
+    MMMxc[i, 2] = MMxc.subs([(x, xci[i, 2]), (y, yci[i, 0])])
+
+    MMMxa[i, 3] = MMxa.subs([(x, xai[i, 3]), (y, yai[i, 0])])
+    MMMxc[i, 3] = MMxc.subs([(x, xci[i, 3]), (y, yci[i, 0])])
+
+    MMMxa[i, 4] = MMxa.subs([(x, xai[i, 4]), (y, yai[i, 0])])
+    MMMxc[i, 4] = MMxc.subs([(x, xci[i, 4]), (y, yci[i, 0])])
+
+    MMMxd[i, 0] = MMxd.subs([(x, xdi[i, 0]), (y, ydi[i, 0])])
+    MMMxe[i, 0] = MMxe.subs([(x, xei[i, 0]), (y, yei[i, 0])])
+
+    MMMxd[i, 1] = MMxd.subs([(x, xdi[i, 1]), (y, ydi[i, 0])])
+    MMMxe[i, 1] = MMxe.subs([(x, xei[i, 1]), (y, yei[i, 0])])
+
+    MMMxd[i, 2] = MMxd.subs([(x, xdi[i, 2]), (y, ydi[i, 0])])
+    MMMxe[i, 2] = MMxe.subs([(x, xei[i, 2]), (y, yei[i, 0])])
+
+    MMMxd[i, 3] = MMxd.subs([(x, xdi[i, 3]), (y, ydi[i, 0])])
+    MMMxe[i, 3] = MMxe.subs([(x, xei[i, 3]), (y, yei[i, 0])])
+
+    MMMxd[i, 4] = MMxd.subs([(x, xdi[i, 4]), (y, ydi[i, 0])])
+    MMMxe[i, 4] = MMxe.subs([(x, xei[i, 4]), (y, yei[i, 0])])
 
 # Смещение графиков для совместного вывода 1 + 3 и 4 + 5
-for i in range(M+2):
-    yci[i] += b1
-    yei[i] += b4
-
-# График 1 + 3, 4 + 5
-plt.subplot(221)
-plt.plot(yai[:, 0], MMMxa)
-plt.subplot(222)
-plt.plot(yci[:, 0], MMMxc)
-#plt.title("1 + 3")
-plt.subplot(223)
-plt.plot(ydi[:, 0], MMMxd)
-plt.subplot(224)
-plt.plot(yei[:, 0], MMMxe)
-#plt.title("4 + 5")
-plt.show()
-"""
-"""
-# Вывод перерезывающей силы
 for i in range(M + 2):
-    xai[i] = 0
-    yai[i] = (b1 / (M + 1)) * i
-    xci[i] = 0
-    yci[i] = (b3 / (M + 1)) * i
-
-    xdi[i] = a4
-    ydi[i] = (b4 / (M + 1)) * i
-    xei[i] = a5
-    yei[i] = (b5 / (M + 1)) * i
-
-    VVVxa[i] = VVxa.subs([(x, xai[i]), (y, yai[i])])
-    VVVxc[i] = VVxc.subs([(x, xci[i]), (y, yci[i])])
-
-    VVVxd[i] = VVxd.subs([(x, xdi[i]), (y, ydi[i])])
-    VVVxe[i] = VVxe.subs([(x, xei[i]), (y, yei[i])])
-
-# Смещение графиков для совместного вывода 1 + 3 и 4 + 5
-for i in range(M+2):
-    yci[i] += b1
-    yei[i] += b4
+    yci[i, 0] += b1
+    yei[i, 0] += b4
 
 # График 1 + 3, 4 + 5
 plt.subplot(121)
-plt.plot(yai, VVVxa)
-plt.plot(yci, VVVxc)
+plt.plot(yai[:, 0], MMMxa[:, 0], '-b', label='x = 0')
+plt.plot(yci[:, 0], MMMxc[:, 0], '-b')
+plt.plot(yai[:, 0], MMMxa[:, 1], '--k', label='x = a/4')
+plt.plot(yci[:, 0], MMMxc[:, 1], '--k')
+plt.plot(yai[:, 0], MMMxa[:, 2], ':k', label='x = a/2')
+plt.plot(yci[:, 0], MMMxc[:, 2], ':k')
+plt.plot(yai[:, 0], MMMxa[:, 3], '-.k', label='x = 3a/4')
+plt.plot(yci[:, 0], MMMxc[:, 3], '-.k')
+plt.plot(yai[:, 0], MMMxa[:, 4], '-k', label='x = a')
+plt.plot(yci[:, 0], MMMxc[:, 4], '-k')
+plt.minorticks_on()
+plt.grid(which='major')
+plt.grid(which='minor', linestyle=':')
 plt.title("1 + 3")
+plt.legend()
+plt.tight_layout()
 plt.subplot(122)
-plt.plot(ydi, VVVxd)
-plt.plot(yei, VVVxe)
+plt.plot(ydi[:, 0], MMMxd[:, 0], '-b', label='x = a')
+plt.plot(yei[:, 0], MMMxe[:, 0], '-b')
+plt.plot(ydi[:, 0], MMMxd[:, 1], '--k', label='x = 3a/4')
+plt.plot(yei[:, 0], MMMxe[:, 1], '--k')
+plt.plot(ydi[:, 0], MMMxd[:, 2], ':k', label='x = a/2')
+plt.plot(yei[:, 0], MMMxe[:, 2], ':k')
+plt.plot(ydi[:, 0], MMMxd[:, 3], '-.k', label='x = a/4')
+plt.plot(yei[:, 0], MMMxe[:, 3], '-.k')
+plt.plot(ydi[:, 0], MMMxd[:, 4], '-k', label='x = 0')
+plt.plot(yei[:, 0], MMMxe[:, 4], '-k')
+plt.minorticks_on()
+plt.grid(which='major')
+plt.grid(which='minor', linestyle=':')
 plt.title("4 + 5")
+plt.legend()
+plt.tight_layout()
 plt.show()
-"""
+
+# Вывод перерезывающей силы
+for i in range(M + 2):
+    xai[i, 0] = 0
+    xci[i, 0] = 0
+    yai[i, 0] = (b1 / (M + 1)) * i
+    yci[i, 0] = (b3 / (M + 1)) * i
+
+    xdi[i, 0] = a4
+    xei[i, 0] = a5
+    ydi[i, 0] = (b4 / (M + 1)) * i
+    yei[i, 0] = (b5 / (M + 1)) * i
+
+    xai[i, 1] = a1 / 4
+    xci[i, 1] = a3 / 4
+
+    xai[i, 2] = a1 / 2
+    xci[i, 2] = a3 / 2
+
+    xai[i, 3] = 3 * a1 / 4
+    xci[i, 3] = 3 * a3 / 4
+
+    xai[i, 4] = a1
+    xci[i, 4] = a3
+
+    xdi[i, 1] = 3 * a4 / 4
+    xei[i, 1] = 3 * a5 / 4
+
+    xdi[i, 2] = a4 / 2
+    xei[i, 2] = a5 / 2
+
+    xdi[i, 3] = a4 / 4
+    xei[i, 3] = a5 / 4
+
+    xdi[i, 4] = 0
+    xei[i, 4] = 0
+
+    VVVxa[i, 0] = VVxa.subs([(x, xai[i, 0]), (y, yai[i, 0])])
+    VVVxc[i, 0] = VVxc.subs([(x, xci[i, 0]), (y, yci[i, 0])])
+
+    VVVxa[i, 1] = VVxa.subs([(x, xai[i, 1]), (y, yai[i, 0])])
+    VVVxc[i, 1] = VVxc.subs([(x, xci[i, 1]), (y, yci[i, 0])])
+
+    VVVxa[i, 2] = VVxa.subs([(x, xai[i, 2]), (y, yai[i, 0])])
+    VVVxc[i, 2] = VVxc.subs([(x, xci[i, 2]), (y, yci[i, 0])])
+
+    VVVxa[i, 3] = VVxa.subs([(x, xai[i, 3]), (y, yai[i, 0])])
+    VVVxc[i, 3] = VVxc.subs([(x, xci[i, 3]), (y, yci[i, 0])])
+
+    VVVxa[i, 4] = VVxa.subs([(x, xai[i, 4]), (y, yai[i, 0])])
+    VVVxc[i, 4] = VVxc.subs([(x, xci[i, 4]), (y, yci[i, 0])])
+
+    VVVxd[i, 0] = VVxd.subs([(x, xdi[i, 0]), (y, ydi[i, 0])])
+    VVVxe[i, 0] = VVxe.subs([(x, xei[i, 0]), (y, yei[i, 0])])
+
+    VVVxd[i, 1] = VVxd.subs([(x, xdi[i, 1]), (y, ydi[i, 0])])
+    VVVxe[i, 1] = VVxe.subs([(x, xei[i, 1]), (y, yei[i, 0])])
+
+    VVVxd[i, 2] = VVxd.subs([(x, xdi[i, 2]), (y, ydi[i, 0])])
+    VVVxe[i, 2] = VVxe.subs([(x, xei[i, 2]), (y, yei[i, 0])])
+
+    VVVxd[i, 3] = VVxd.subs([(x, xdi[i, 3]), (y, ydi[i, 0])])
+    VVVxe[i, 3] = VVxe.subs([(x, xei[i, 3]), (y, yei[i, 0])])
+
+    VVVxd[i, 4] = VVxd.subs([(x, xdi[i, 4]), (y, ydi[i, 0])])
+    VVVxe[i, 4] = VVxe.subs([(x, xei[i, 4]), (y, yei[i, 0])])
+
+# Смещение графиков для совместного вывода 1 + 3 и 4 + 5
+for i in range(M + 2):
+    yci[i, 0] += b1
+    yei[i, 0] += b4
+
+# График 1 + 3, 4 + 5
+plt.subplot(121)
+plt.plot(yai[:, 0], VVVxa[:, 0], '-b', label='x = 0')
+plt.plot(yci[:, 0], VVVxc[:, 0], '-b')
+plt.plot(yai[:, 0], VVVxa[:, 1], '--k', label='x = a/4')
+plt.plot(yci[:, 0], VVVxc[:, 1], '--k')
+plt.plot(yai[:, 0], VVVxa[:, 2], ':k', label='x = a/2')
+plt.plot(yci[:, 0], VVVxc[:, 2], ':k')
+plt.plot(yai[:, 0], VVVxa[:, 3], '-.k', label='x = 3a/4')
+plt.plot(yci[:, 0], VVVxc[:, 3], '-.k')
+plt.plot(yai[:, 0], VVVxa[:, 4], '-k', label='x = a')
+plt.plot(yci[:, 0], VVVxc[:, 4], '-k')
+plt.minorticks_on()
+plt.grid(which='major')
+plt.grid(which='minor', linestyle=':')
+plt.title("1 + 3")
+plt.legend()
+plt.tight_layout()
+plt.subplot(122)
+plt.plot(ydi[:, 0], VVVxd[:, 0], '-b', label='x = a')
+plt.plot(yei[:, 0], VVVxe[:, 0], '-b')
+plt.plot(ydi[:, 0], VVVxd[:, 1], '--k', label='x = 3a/4')
+plt.plot(yei[:, 0], VVVxe[:, 1], '--k')
+plt.plot(ydi[:, 0], VVVxd[:, 2], ':k', label='x = a/2')
+plt.plot(yei[:, 0], VVVxe[:, 2], ':k')
+plt.plot(ydi[:, 0], VVVxd[:, 3], '-.k', label='x = a/4')
+plt.plot(yei[:, 0], VVVxe[:, 3], '-.k')
+plt.plot(ydi[:, 0], VVVxd[:, 4], '-k', label='x = 0')
+plt.plot(yei[:, 0], VVVxe[:, 4], '-k')
+plt.minorticks_on()
+plt.grid(which='major')
+plt.grid(which='minor', linestyle=':')
+plt.title("4 + 5")
+plt.legend()
+plt.tight_layout()
+plt.show()
