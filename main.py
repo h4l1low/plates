@@ -3,7 +3,7 @@ import sympy as sm
 import matplotlib.pyplot as plt
 
 # Мантисса
-k = 300
+k = 100
 
 # модуль Юнга (упругости) и коэффициент Пуассона для стали
 E = sm.N(2 * 10 ** 11, k)
@@ -965,23 +965,23 @@ for i in range(M):
 
 print('Готово\n')
 
-wwa = (wa * D) / (q * a1 ** 4)
-wwb = (wb * D) / (q * a2 ** 4)
-wwc = (wc * D) / (q * a3 ** 4)
-wwd = (wd * D) / (q * a4 ** 4)
-wwe = (we * D) / (q * a5 ** 4)
+wwa = (wa * D) / (q * a ** 4)
+wwb = (wb * D) / (q * a ** 4)
+wwc = (wc * D) / (q * a ** 4)
+wwd = (wd * D) / (q * a ** 4)
+wwe = (we * D) / (q * a ** 4)
 
-MMxa = Mxa / (q * a1 ** 2)
-MMxb = Mxb / (q * a2 ** 2)
-MMxc = Mxc / (q * a2 ** 2)
-MMxd = Mxd / (q * a2 ** 2)
-MMxe = Mxe / (q * a2 ** 2)
+MMxa = Mxa / (q * a ** 2)
+MMxb = Mxb / (q * a ** 2)
+MMxc = Mxc / (q * a ** 2)
+MMxd = Mxd / (q * a ** 2)
+MMxe = Mxe / (q * a ** 2)
 
-VVxa = Vxa / (q * a1)
-VVxb = Vxb / (q * a2)
-VVxc = Vxc / (q * a2)
-VVxd = Vxd / (q * a2)
-VVxe = Vxe / (q * a2)
+VVxa = Vxa / (q * a)
+VVxb = Vxb / (q * a)
+VVxc = Vxc / (q * a)
+VVxd = Vxd / (q * a)
+VVxe = Vxe / (q * a)
 
 wwwa = sm.zeros(M + 2, 5)
 wwwb = sm.zeros(M + 2, 5)
